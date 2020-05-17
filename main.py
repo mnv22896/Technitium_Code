@@ -1,10 +1,3 @@
-'''
-
-                            Online Python Interpreter.
-                Code, Compile, Run and Debug python program online.
-Write your code in this editor and press "Run" button to execute it.
-
-'''
 
 from collections import defaultdict
 import math
@@ -16,29 +9,30 @@ China_rate={'large':110,'Xlarge':200,'X4large':670,'X8large':1180}
 ans=defaultdict()
 capacity=1150
 hour=1 
-output=[]
-def cost(capacity,hour,ouput,qua,quantity):
-    if capacity==0:
-        return ans
+output=defaultdict(tuple)
+p=0
+def cost(capacity,hour,ouput,qua,quantity,ans):
+    
+   
     
     for i in range(0,len(qua)):
         print(qua[-i-1],capacity,i,qua)
         
         
         if capacity%qua[-i-1] ==0:
-            ans[quantity[-i-1]]=int(math.floor(capacity/qua[i-1])) 
-            print(ans)
-            output.append(ans)
-            
+            ans[quantity[-i-1]]=int(math.floor(capacity/qua[-i-1])) 
+            print(ans,capacity,quantity[-1-i])
+            output[i]=ans
+            ans[quantity[-i-1]]=0
             return 
             
-        elif capacity > qua[i-1]:
+        elif capacity > qua[-i-1]:
             ans[quantity[-i-1]]=int(math.floor(capacity/qua[-i-1])) 
-            print (ans)
-            cost(capacity%qua[-i-1],hour,ouput,qua[:-i-1],quantity[:-i-1])
+            cost(capacity%qua[-i-1],hour,ouput,qua[:-i-1],quantity[:-i-1],ans)
+            ans[quantity[-i-1]]=0
             
             
-t=cost(capacity,hour,output,qua,quantity)
+t=cost(capacity,hour,output,qua,quantity,ans)
 print(output)
             
         
